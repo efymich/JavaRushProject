@@ -27,8 +27,8 @@ public class Runner {
                     decoder.decode(inputSaver.getPath(), inputSaver.getKey());
                     break;
                 case "3":
-//                    decoder = new BruteDecoder();
-//                    decoder.decode(decryptfile);
+                    decoder = new BruteDecoder();
+                    decoder.decode(inputSaver.getPath());
                     break;
                 case "E":
                     System.out.println("Программа завершила работу.");
