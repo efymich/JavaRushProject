@@ -10,14 +10,24 @@ import java.util.Scanner;
 public class InputSaver {
     private Path path;
     private int key;
+    
+    private int mode;
+
+    private Path bible;
 
 
-    public InputSaver(Scanner console) {
+    public InputSaver(Scanner console,int mode) {
+        this.mode = mode;
         try {
             System.out.println("Введите путь к файлу: ");
             this.setPath(Path.of(console.nextLine()));
-            System.out.println("Введите ключ шифрования: ");
-            this.setKey(Integer.parseInt(console.nextLine()));
+            if (this.mode == 1 ||  this.mode == 2) {
+                System.out.println("Введите ключ шифрования: ");
+                this.setKey(Integer.parseInt(console.nextLine()));   
+            } else if (this.mode == 4) {
+                System.out.println("Введите путь к файлу для анализа: ");
+                this.setBible(Path.of(console.nextLine()));
+            }
 
             if (!Files.exists(this.path) || !Files.isRegularFile(this.path)) {
                 throw new IOException();
@@ -30,6 +40,22 @@ public class InputSaver {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setBible(Path bible) {
+        this.bible = bible;
+    }
+
+    public Path getBible() {
+        return bible;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
+    public int getMode() {
+        return mode;
     }
 
     public Path getPath() {
@@ -48,7 +74,7 @@ public class InputSaver {
         this.key = key;
     }
 
-    public void saveFile(String text,int mode) {
+    public void saveFile(String text) {
         try {
             Path newPath;
             String def = this.path.toString();
@@ -56,11 +82,14 @@ public class InputSaver {
                 newPath = Path.of(def.replace(".txt","_encrypted.txt"));
             } else if (mode == 2) {
                 newPath = Path.of(def.replace(".txt","_decrypted.txt"));
+            } else if (mode == 3) {
+                newPath = Path.of(def.replace(".txt","_bruteforce_decrypted.txt"));
             } else throw new IllegalArgumentException();
 
             Files.write(newPath,text.getBytes(StandardCharsets.UTF_8));
 
             System.out.println("Новый файл расположен по следующему пути " + newPath.toString());
+            System.out.println();
         } catch (IllegalArgumentException e) {
             System.out.println("Неверный агрумент для метода " + Object.class.getEnclosingMethod().getName());
         } catch (IOException e) {
