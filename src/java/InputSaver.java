@@ -10,20 +10,20 @@ import java.util.Scanner;
 public class InputSaver {
     private Path path;
     private int key;
-    
+
     private int mode;
 
     private Path bible;
 
 
-    public InputSaver(Scanner console,int mode) {
+    public InputSaver(Scanner console, int mode) {
         this.mode = mode;
         try {
             System.out.println("Введите путь к файлу: ");
             this.setPath(Path.of(console.nextLine()));
-            if (this.mode == 1 ||  this.mode == 2) {
+            if (this.mode == 1 || this.mode == 2) {
                 System.out.println("Введите ключ шифрования: ");
-                this.setKey(Integer.parseInt(console.nextLine()));   
+                this.setKey(Integer.parseInt(console.nextLine()));
             } else if (this.mode == 4) {
                 System.out.println("Введите путь к файлу для анализа: ");
                 this.setBible(Path.of(console.nextLine()));
@@ -79,14 +79,16 @@ public class InputSaver {
             Path newPath;
             String def = this.path.toString();
             if (mode == 1) {
-                newPath = Path.of(def.replace(".txt","_encrypted.txt"));
+                newPath = Path.of(def.replace(".txt", "_encrypted.txt"));
             } else if (mode == 2) {
-                newPath = Path.of(def.replace(".txt","_decrypted.txt"));
+                newPath = Path.of(def.replace(".txt", "_decrypted.txt"));
             } else if (mode == 3) {
-                newPath = Path.of(def.replace(".txt","_bruteforce_decrypted.txt"));
+                newPath = Path.of(def.replace(".txt", "_bruteforce_decrypted.txt"));
+            } else if (mode == 4) {
+                newPath = Path.of(def.replace(".txt", "_static_analysis_decrypted.txt"));
             } else throw new IllegalArgumentException();
 
-            Files.write(newPath,text.getBytes(StandardCharsets.UTF_8));
+            Files.write(newPath, text.getBytes(StandardCharsets.UTF_8));
 
             System.out.println("Новый файл расположен по следующему пути " + newPath.toString());
             System.out.println();

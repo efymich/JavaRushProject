@@ -11,18 +11,18 @@ public class CaesarCipher {
     static List<Character> alphabet = generateSymbols();
 
     public static String encrypt(Path path, int key) {
-        return run(path,key);
+        return run(path, key);
     }
 
-    public static String decode(Path path,int key) {
-        return run(path,-key);
+    public static String decode(Path path, int key) {
+        return run(path, -key);
     }
 
-    public static String bruteDecode(Path path){
+    public static String bruteDecode(Path path) {
         int maxCount = 0;
         ArrayList<Integer> statistic = new ArrayList<>();
         for (int i = 1; i < CaesarCipher.alphabet.size(); i++) {
-            String file = run(path,-i);
+            String file = run(path, -i);
             int counterWhiteSpaces = 0;
             for (char character : file.toCharArray()) {
                 if (character == ' ') {
@@ -32,20 +32,21 @@ public class CaesarCipher {
             maxCount = Math.max(counterWhiteSpaces, maxCount);
             statistic.add(counterWhiteSpaces);
         }
-        return run(path,-(statistic.indexOf(maxCount)+1));
+        return run(path, -(statistic.indexOf(maxCount) + 1));
     }
+
     private static List<Character> generateSymbols() {
         List<Character> symbols = new ArrayList<>();
-        for (int i=32; i<=47;i++) symbols.add((char) i);
-        for (char c='0'; c<='9'; c++) symbols.add(c);
-        for (char c='А'; c<='Я'; c++) symbols.add(c);
-        for (char c='а'; c<='я'; c++) symbols.add(c);
+        for (int i = 32; i <= 47; i++) symbols.add((char) i);
+        for (char c = '0'; c <= '9'; c++) symbols.add(c);
+        for (char c = 'А'; c <= 'Я'; c++) symbols.add(c);
+        for (char c = 'а'; c <= 'я'; c++) symbols.add(c);
         return symbols;
     }
 
-    private static String run(Path path,int key) {
+    private static String run(Path path, int key) {
         StringBuilder result = new StringBuilder();
-        try(FileReader fileReader = new FileReader(path.toFile())){
+        try (FileReader fileReader = new FileReader(path.toFile())) {
             char[] input = new char[(int) path.toFile().length()];
             fileReader.read(input);
             for (char character : input) {
