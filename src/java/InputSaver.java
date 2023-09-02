@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.util.Scanner;
 
 public class InputSaver {
+    //TODO: Убрать лишние строки и сделать логические пробелы
     private Path path;
     private int key;
 
@@ -75,6 +76,8 @@ public class InputSaver {
     }
 
     public void saveFile(String text) {
+        //TODO: Вынести бизнес логику из конструктора. Сделать отдельный метод и применять его
+        //Возможно нужно сделать static
         try {
             Path newPath;
             String def = this.path.toString();
